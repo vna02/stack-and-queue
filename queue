@@ -1,0 +1,147 @@
+
+#include <iostream>
+//#include "LL.cpp"
+using namespace std;
+
+class Node{
+  public:
+  int data;
+  Node * next;
+  Node(){
+      next = NULL;
+  }
+};
+
+class LinkedList{
+
+      public:
+      //Head -> Node type ptr
+        Node * head;
+        Node * tail;
+
+      //Constructor
+      LinkedList(){
+        head = NULL;
+        tail = NULL;
+      }
+      
+      void insert(int value){
+         Node * temp = new Node;
+        temp->next = head;
+          head = temp;
+      }
+
+      void insertAt(int pos,int value){
+          Node * current = head;
+          int i = 1; 
+          while(i<pos-1){
+              i++;
+              current = current-> next;
+          }
+
+          //Create a node
+          Node * temp = new Node; 
+          temp -> data = value;
+          temp-> next = current->next;
+          current->next = temp;
+
+      }
+
+      void delet(){
+        Node * temp = head;
+        Node * current = head;
+        while(current->next != head){
+          current = current->next;
+        }
+        current->next = NULL;
+
+        head=current;
+        delete temp;
+
+      }
+      void deleteAt(int pos)
+    {
+        Node * current = head;
+        int i =1;
+        while(i < pos-1){
+            i++;
+             current = current->next;
+        }
+        Node * temp = current->next;
+        current->next = temp->next;
+        delete temp;
+    }
+
+      void display(){
+        Node * current = head;
+        while(current != NULL){
+          cout<<current->data<<"->";
+          current = current->next;
+        }cout<<endl;
+      }
+
+      int countItems(){
+        int count = 0;
+        Node * current = head;
+        while(current != NULL){
+           count++;
+           current = current->next;
+        }
+        cout << count << endl;
+        return count;
+    }
+};
+
+class Queue{
+  public:
+  Node*top;
+  LinkedList l1;
+  Queue(){
+    top = l1.head;
+  }
+  void Enqueue(int value){
+    l1.insertAt (1,value);
+    top=l1.head;
+  }
+  void Dequeue(){
+    l1.deleteAt(1);
+    top = l1.head;
+  }
+  bool isEmpty(){
+    if(top == NULL)
+    return true;
+    else 
+    return false;
+  }
+  int size(){
+    return l1.countItems();
+  }
+  void topDisplay(){
+
+  }
+  void display(){
+    return l1.display();
+  }
+
+};
+
+int main(){;
+
+ LinkedList l1;
+    l1.insert(5);
+    l1.insert(3);
+    l1.insert(2);
+    l1.countItems();
+    l1.display();
+
+Queue q1;
+    for(int i=0; i<3 ;i++)
+    q1.Enqueue(i);
+  q1.Dequeue();
+  q1.isEmpty();
+  q1.size();
+  q1.topDisplay();
+  q1.display();
+
+return 0;
+}
