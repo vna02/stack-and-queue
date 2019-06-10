@@ -1,0 +1,181 @@
+//library
+#include <iostream>
+//#include "LL.cpp"
+
+using namespace std;
+
+class Node{
+  //for a constructor the class has to be public 
+  public:
+  //Data
+  int data;
+  //Pointer to the next Node
+  Node * next;
+  //Constructor that makes the pointer to NULL
+  Node(){
+      next = NULL;
+  }
+};
+
+//creating a class
+class LinkedList{
+      
+      public:
+      //Head -> Node type ptr
+        Node * head;
+        Node * tail;
+        
+      //Constructor
+      LinkedList(){
+        head = NULL;
+        tail = NULL;
+      }
+      
+      //Insert
+      void insert(int value){
+        //If first node is added 
+        //new has 8 bytes as it is a pointer //temp is the pointer pointing to the new guy 
+         Node * temp = new Node;
+        //adding data to the value //goes to the temp and then finds the place and atores the data 
+        temp->data = value; 
+        // first node only 
+        if (head == NULL){
+          head = temp;
+          tail = temp;
+        //A->B = C here A is a pointer
+        //A.B = C here A is an object
+        // second node only
+        }
+        else {
+          tail->next = temp; 
+        }
+        tail = temp;
+      }
+      
+      void insertAt(int pos,int value){
+          //Reach the place before position
+          Node * current = head;
+          int i = 1; 
+          while(i<pos-1){
+              i++;
+              current = current-> next;
+          }
+          
+          //Create a node
+          Node * temp = new Node; 
+          temp -> data = value;
+          
+          //Moving ptrs like magic 
+          temp-> next = current->next;
+          current->next = temp;
+          
+      }
+      //Deletion of the last element
+      void delet(){
+        //store tail in a temp
+        Node * temp = tail;
+        //before the tail has to point to null 
+        Node * current = head;
+        while(current->next != tail){
+          current = current->next;
+        }
+        current->next = NULL;
+        
+        //update tail ie. move to the previous one 
+        tail=current;
+        //delete temp 
+        delete temp;
+          
+      }
+      void deleteAt(int pos)
+    {
+        // Reach the place before the pos
+        Node * current = head;
+        int i =1;
+        while(i < pos-1){
+            i++;
+             current = current->next;
+        } 
+        //Change the pointer to point to the next one 
+        Node * temp = current->next;
+        current->next = temp->next;
+        // delete temp 
+        delete temp;
+    }
+      
+      //Display
+      void display(){
+        Node * current = head;
+        while(current != NULL){
+          cout<<current->data<<"->";
+          current = current->next;
+        }cout<<endl;
+      }
+      
+      int countItems(){
+        // Initialze count
+        int count = 0;
+        // Initialise current
+        Node * current = head;
+        while(current != NULL){
+           count++;
+           current = current->next;
+        }
+        cout << count << endl;
+        return count;
+    }
+};
+
+class Stack{
+  public:
+  Node*top;
+  LinkedList l1;
+  Stack(){
+    top = l1.head;
+  }
+  //To push on top a similar function to insertAt
+  void push(int value){
+    // void insertAt(int pos,int value){
+    l1.insertAt (1,value);
+    //top = new_head;
+    top=l1.head;
+  }
+  //To delete at the top similar function to deleteAt
+  void pop(){
+    //void deleteAt(int pos){
+    l1.deleteAt(1);
+    //top = new head
+    top = l1.head;
+  }
+  bool isEmpty(){
+    if(top == NULL)
+    return true;
+    else 
+    return false;
+  }
+  int size(){
+    return l1.countItems();
+  }
+  void topDisplay(){
+    
+  }
+  void display(){
+    return l1.display();
+  }
+  
+};
+
+int main(){;
+  
+  Stack s1;
+  
+  for(int i=0; i<5;i++)
+    s1.push(i);
+  s1.push();
+  s1.pop();
+  s1.isEmpty();
+  s1.size();
+  s1.topDisplay();
+  s1.display();
+     return 0;
+ }
